@@ -3,6 +3,7 @@ package com.hostelDatabase.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Entity
@@ -13,7 +14,7 @@ public class Hosteler {
     private int id;
     private String fname;
     private String lname;
-    private int phonenumber;
+    private String phonenumber;
 //    private String emailId;
 //    private String college;
 //    private int floor;
