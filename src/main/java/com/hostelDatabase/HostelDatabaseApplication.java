@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HostelDatabaseApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HostelDatabaseApplication.class, args);
-	}
+        SpringApplication.run(HostelDatabaseApplication.class, args);
+    }
 
 }
