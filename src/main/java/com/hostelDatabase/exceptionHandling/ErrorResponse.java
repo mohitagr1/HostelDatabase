@@ -1,5 +1,6 @@
 package com.hostelDatabase.exceptionHandling;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
 class ErrorResponse {
     private HttpStatus status;
     private ZonedDateTime timeStamp;
@@ -97,7 +99,5 @@ class ErrorResponse {
     void addValidationErrors(Set<ConstraintViolation<?>> constraintViolations) {
         constraintViolations.forEach(this::addValidationError);
     }
-
-
 }
 

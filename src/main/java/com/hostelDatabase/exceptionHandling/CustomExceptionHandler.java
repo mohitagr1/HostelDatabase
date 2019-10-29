@@ -208,4 +208,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }
 
+    /**
+     * Handles RecordNotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
+     *
+     * @param ex the RecordNotFoundException
+     * @return the ErrorResponse object
+     */
+    @ExceptionHandler(InvalidEntityException.class)
+    protected ResponseEntity<Object> handleInvalidEntityException(
+            InvalidEntityException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST);
+        errorResponse.setMessage(ex.getMessage());
+        return buildResponseEntity(errorResponse);
+    }
 }

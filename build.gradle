@@ -23,7 +23,5 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.googlecode.libphonenumber/libphonenumber
 	compile group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '8.10.20'
 
-
-
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

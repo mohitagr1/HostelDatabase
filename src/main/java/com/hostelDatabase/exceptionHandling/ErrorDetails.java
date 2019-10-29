@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class ErrorDetails extends SubError {
-    private final String message;
+    private String message;
     private String object;
     private String field;
     private Object rejectedValue;
@@ -16,5 +16,9 @@ public class ErrorDetails extends SubError {
     ErrorDetails(String object, String message) {
         this.object = object;
         this.message = message;
+    }
+
+    public ErrorDetails(String object, String field, String rejectedValue, String message) {
+        super();
     }
 }

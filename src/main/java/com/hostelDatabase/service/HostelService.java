@@ -1,6 +1,7 @@
 package com.hostelDatabase.service;
 
 import com.hostelDatabase.dao.HostelRepo;
+import com.hostelDatabase.exceptionHandling.InvalidEntityException;
 import com.hostelDatabase.exceptionHandling.RecordNotFoundException;
 import com.hostelDatabase.model.Hosteler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,23 +27,23 @@ public class HostelService {
         return hosteler;
     }
 
-    public Hosteler addHosteler(Hosteler hosteler) {
+    public Hosteler addHosteler(Hosteler hosteler) throws InvalidEntityException {
         ValidationService.validate(hosteler);
         return hostelRepo.save(hosteler);
     }
 
-    public Hosteler saveOrUpdateHosteler(int id, Hosteler hosteler) {
-        Optional<Hosteler> hosteler1 = hostelRepo.findById(id);
-        if (!hosteler1.isPresent()) {
-            return hostelRepo.save(hosteler);
+    public Hosteler saveOrUpdateHosteler(int id, Hosteler hosteler) throws InvalidEntityException {
+        if (!hostelRepo.existsById(id)) {
+            throw new RecordNotFoundException("Invalid Hosteler id : " + id);
         }
+        ValidationService.validate(hosteler);
         hosteler.setId(id);
         return hostelRepo.save(hosteler);
     }
 
     public boolean deleteHosteler(int id) {
         if (!hostelRepo.existsById(id)) {
-            throw new RecordNotFoundException("Invaild Hostler id :" + id);
+            throw new RecordNotFoundException("Invalid Hostler id :" + id);
         }
         hostelRepo.deleteById(id);
         return true;
