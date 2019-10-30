@@ -79,7 +79,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST);
-        errorResponse.setMessage("Validation error MethodArgumentNotValidException");
+        errorResponse.setMessage("Validation error Method_Argument_Not_Valid_Exception");
         errorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
         errorResponse.addValidationError(ex.getBindingResult().getGlobalErrors());
         return buildResponseEntity(errorResponse);
@@ -209,16 +209,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handles RecordNotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
+     * Handles InvalidEntityException.
      *
-     * @param ex the RecordNotFoundException
+     * @param ex the InvalidEntityException
      * @return the ErrorResponse object
      */
     @ExceptionHandler(InvalidEntityException.class)
     protected ResponseEntity<Object> handleInvalidEntityException(
             InvalidEntityException ex) {
         ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST);
-        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setMessage(ex.getException());
+        errorResponse.setSubErrors(ex.getSubErrors());
         return buildResponseEntity(errorResponse);
     }
 }

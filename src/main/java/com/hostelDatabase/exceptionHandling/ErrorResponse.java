@@ -53,8 +53,8 @@ class ErrorResponse {
         subErrors.add(subError);
     }
 
-    private void addValidationError(String object, String field, Object rejectedValue, String message) {
-        addSubError(new ErrorDetails(object, field, (String) rejectedValue, message));
+    private void addValidationError(String message, String object, String field, Object rejectedValue) {
+        addSubError(new ErrorDetails(message, object, field, rejectedValue));
     }
 
     private void addValidationError(String object, String message) {
@@ -63,10 +63,10 @@ class ErrorResponse {
 
     private void addValidationError(FieldError fieldError) {
         this.addValidationError(
+                fieldError.getDefaultMessage(),
                 fieldError.getObjectName(),
                 fieldError.getField(),
-                fieldError.getRejectedValue(),
-                fieldError.getDefaultMessage());
+                fieldError.getRejectedValue());
     }
 
     void addValidationErrors(List<FieldError> fieldErrors) {
@@ -90,10 +90,10 @@ class ErrorResponse {
      */
     private void addValidationError(ConstraintViolation<?> cv) {
         this.addValidationError(
+                cv.getMessage(),
                 cv.getRootBeanClass().getSimpleName(),
                 ((PathImpl) cv.getPropertyPath()).getLeafNode().asString(),
-                cv.getInvalidValue(),
-                cv.getMessage());
+                cv.getInvalidValue());
     }
 
     void addValidationErrors(Set<ConstraintViolation<?>> constraintViolations) {

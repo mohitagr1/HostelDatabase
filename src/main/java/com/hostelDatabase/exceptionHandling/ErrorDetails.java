@@ -17,8 +17,4 @@ public class ErrorDetails extends SubError {
         this.object = object;
         this.message = message;
     }
-
-    public ErrorDetails(String object, String field, String rejectedValue, String message) {
-        super();
-    }
 }

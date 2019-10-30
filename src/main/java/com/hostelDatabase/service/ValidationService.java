@@ -14,9 +14,14 @@ class ValidationService {
     static void validate(Hosteler hosteler) throws InvalidEntityException {
         hosteler.setPhoneNumber(validatePhoneNumber(hosteler.getPhoneNumber(), true));
         hosteler.setAlternativePhoneNumber(validatePhoneNumber(hosteler.getAlternativePhoneNumber(), false));
+        validateEmailId(hosteler.getEmailId());
     }
 
-    private static String validatePhoneNumber(String phoneNumber, boolean checkNull) throws InvalidEntityException{
+    private static void validateEmailId(String emailId) {
+
+    }
+
+    private static String validatePhoneNumber(String phoneNumber, boolean checkNull) throws InvalidEntityException {
         if (phoneNumber == null) {
             if (checkNull) {
                 throw new NullPointerException("The phone number supplied was null!");
@@ -35,11 +40,10 @@ class ValidationService {
             if (phoneNumberUtil.isValidNumber(phoneNumber1)) {
                 return phoneNumberUtil.format(phoneNumber1, PhoneNumberUtil.PhoneNumberFormat.E164);
             } else {
-                if(checkNull==true) {
-                    throw new InvalidEntityException("Phone Number is invalid : " + phoneNumber);
-                }
-                else{
-                    throw new InvalidEntityException("Alternative Phone Number is invalid : " + phoneNumber);
+                if (checkNull) {
+                    throw new InvalidEntityException("Phone Number is invalid : " + phoneNumber, null);
+                } else {
+                    throw new InvalidEntityException("Alternative Phone Number is invalid : " + phoneNumber, null);
                 }
             }
         }
