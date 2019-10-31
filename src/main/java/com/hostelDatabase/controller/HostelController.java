@@ -1,6 +1,5 @@
 package com.hostelDatabase.controller;
 
-import com.hostelDatabase.dao.HostelRepo;
 import com.hostelDatabase.model.Hosteler;
 import com.hostelDatabase.service.HostelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 public class HostelController {
@@ -23,6 +23,7 @@ public class HostelController {
     public Optional<Hosteler> getHostelerById(@PathVariable("id") int id){
         return hostelService.getHostelerById(id);
     }
+
 
     @PostMapping(path = "/hosteler")
     public Hosteler addHosteler(@RequestBody Hosteler hosteler){
