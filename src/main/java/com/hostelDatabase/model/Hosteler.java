@@ -2,28 +2,26 @@ package com.hostelDatabase.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.hibernate.annotations.NaturalId;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
 @Data
-public class Hosteler {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @NotNull(message = "First name should not be empty!")
+public class Hosteler extends AbstractPersistable<Integer> {
+
+    private String hostelerId;
+    @NotNull(message = "First name cannot not be empty!")
     private String firstName;
-    @NotNull(message = "First name should not be empty!")
+    @NotNull(message = "First name cannot not be empty!")
     private String lastName;
     private String fatherName;
-    private String MotherName;
-    @NotNull(message = "Phone Number should not be empty!")
+    private String motherName;//camel case
+    @NotNull(message = "Phone Number cannot not be empty!")
     private String phoneNumber;
     private String alternativePhoneNumber;
     @Email(message = "Email entered is invalid.!!")
@@ -35,8 +33,8 @@ public class Hosteler {
     private int age;
     private LocalDate dateOfJoining;
     private LocalDate dateOfBirth;
-    private String AddressOfNative;
-    private String AddressOfCorrespondence;
+    private String addressOfNative;//camel case
+    private String addressOfCorrespondence;//camel case
     @JsonProperty
     private boolean haveVehicle;
 }

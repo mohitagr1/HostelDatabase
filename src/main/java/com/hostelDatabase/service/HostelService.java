@@ -1,5 +1,6 @@
 package com.hostelDatabase.service;
 
+import com.hostelDatabase.controller.LoginController;
 import com.hostelDatabase.dao.HostelRepo;
 import com.hostelDatabase.exceptionHandling.ErrorDetails;
 import com.hostelDatabase.exceptionHandling.InvalidEntityException;
@@ -8,6 +9,7 @@ import com.hostelDatabase.exceptionHandling.SubError;
 import com.hostelDatabase.model.Hosteler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hostelDatabase.model.Login;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.Optional;
 public class HostelService {
     @Autowired
     private HostelRepo hostelRepo;
+    @Autowired
+    private LoginController loginController;
 
     private List<SubError> subErrorList;
 
@@ -35,8 +39,28 @@ public class HostelService {
     public Hosteler addHosteler(Hosteler hosteler) throws InvalidEntityException {
         subErrorList = null;
         ValidationService.validate(hosteler);
+        System.out.println("validate OK");
         CheckForDuplicates(hosteler);
-        return hostelRepo.save(hosteler);
+
+        hostelRepo.save(hosteler);
+        System.out.println("Check Passed --> "+hosteler.getHostelerId());
+        String hostelerId = String.valueOf((hosteler.getId()));
+        System.out.println(hostelerId);
+        int length = hostelerId.length();
+        switch (length){
+            case 1: hostelerId = "00"+hostelerId;
+                break;
+            case 2: hostelerId = "0"+hostelerId;
+                break;
+            default:
+        }
+        hosteler.setHostelerId("1"+"MH"+hosteler.getDateOfJoining().getYear()+hostelerId);
+        hostelRepo.save(hosteler);
+        Login login = new Login(hosteler.getId(),hosteler.getHostelerId(),hosteler.getFirstName());
+        System.out.println("login login --->"+login.getHostelerId()+" "+login.getPassword());
+        loginController.addHostelerLogin(login);
+        System.out.println("Check Passed --> "+hosteler.getHostelerId());
+        return hosteler;
     }
 
     private void CheckForDuplicates(Hosteler hosteler) throws InvalidEntityException {
@@ -46,7 +70,7 @@ public class HostelService {
         if (hostelRepo.existsHostelerByPhoneNumber(hosteler.getPhoneNumber())) {
             addSubError(new ErrorDetails("Phone Number already exists !!", "Hosteler", "Phone Number", hosteler.getPhoneNumber()));
         }
-        if (!subErrorList.isEmpty()) {
+        if (subErrorList!=null && !subErrorList.isEmpty()) {
             throw new InvalidEntityException("DUPLICATION ERROR !!", subErrorList);
         }
     }
@@ -63,7 +87,7 @@ public class HostelService {
             throw new RecordNotFoundException("Invalid Hosteler id : " + id);
         }
         ValidationService.validate(hosteler);
-        hosteler.setId(id);
+//        hosteler.setId(id);
         return hostelRepo.save(hosteler);
     }
 
