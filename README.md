@@ -6,9 +6,9 @@
 * Technology Used: Spring Boot(Java), MySql,Flutter(Dart)
 
 <p float="left">
+   <img src="/src/main/resources/assets/mock.gif" height="500"/>
    <img src="/src/main/resources/assets/loginPage.jpeg" height="500"/>
    <img src="/src/main/resources/assets/HomePage.jpeg" height="500"/>
    <img src="/src/main/resources/assets/ProfilePage.jpeg" height="500"/>
    <img src="/src/main/resources/assets/HomeDark.jpeg" height="500"/>
-   <img src="/src/main/resources/assets/mock.gif" height="500"/>
 </p>
