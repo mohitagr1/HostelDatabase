@@ -1,4 +1,4 @@
-package com.hostelDatabase.hostelDatabase;
+package com.hostelDatabase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
